@@ -48,3 +48,13 @@ def perspective(img, startpoints, endpoints, interpolation=Image.BICUBIC):
 
     coeffs = _get_perspective_coeffs(startpoints, endpoints)
     return img.transform(img.size, Image.PERSPECTIVE, coeffs, interpolation)
+
+def perspective_point(point, startpoints, endpoints):
+    coeffs = _get_perspective_coeffs(endpoints, startpoints)
+
+    a, b, c, d, e, f, g, h = coeffs
+
+    x, y = point
+
+    return [(a * x + b * y + c) / (g * x + h * y + 1),
+            (d * x + e * y + f) / (g * x + h * y + 1)]
